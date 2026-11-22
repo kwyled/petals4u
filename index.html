@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="claude:viewport-fit-sides" content="cover">
+  <title>Petals4U</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,500&display=swap">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main>
+    <canvas id="glow2" aria-hidden="true"></canvas>
+    <canvas id="glow1" aria-hidden="true"></canvas>
+    <canvas id="c" aria-label="A glowing bouquet of green roses, lavender, sunflowers, tulips and daisies made of text characters, slowly turning"></canvas>
+  </main>
+  <div class="brand">Petals<span>4U</span></div>
+  <button id="settingsToggle" class="settings-toggle" type="button" aria-expanded="false" aria-controls="controlPanel" aria-label="Open bouquet options">Options</button>
+  <aside id="controlPanel" class="control-panel" aria-hidden="true">
+    <header class="panel-header">
+      <div>
+        <span class="eyebrow">Petals4U</span>
+        <h2>Your bouquet</h2>
+      </div>
+      <button id="closePanel" class="icon-button" type="button" aria-label="Close settings">&times;</button>
+    </header>
+    <div class="panel-scroll">
+      <section>
+        <h3>Theme</h3>
+        <div id="themeGrid" class="theme-grid">
+          <button type="button" data-theme="valentine" class="theme-button active">Rose</button>
+          <button type="button" data-theme="anniversary" class="theme-button">Lilac</button>
+          <button type="button" data-theme="birthday" class="theme-button">Sunset</button>
+          <button type="button" data-theme="spring" class="theme-button">Spring</button>
+          <button type="button" data-theme="memorial" class="theme-button">Memorial</button>
+          <button type="button" data-theme="winter" class="theme-button">Winter</button>
+        </div>
+      </section>
+      <section>
+        <h3>Flowers</h3>
+        <div class="toggle-grid">
+          <label><input type="checkbox" data-kind="rose" checked> Roses</label>
+          <label><input type="checkbox" data-kind="lav" checked> Lavender</label>
+          <label><input type="checkbox" data-kind="sun" checked> Sunflowers</label>
+          <label><input type="checkbox" data-kind="tulip" checked> Tulips</label>
+          <label><input type="checkbox" data-kind="daisy" checked> Daisies</label>
+        </div>
+      </section>
+      <section>
+        <h3>Atmosphere</h3>
+        <label class="range-label">Bouquet size<input id="sizeRange" type="range" min="75" max="125" value="100"></label>
+        <label class="range-label">Flower density<input id="densityRange" type="range" min="50" max="140" value="100"></label>
+        <label class="range-label">Glow<input id="glowRange" type="range" min="20" max="140" value="100"></label>
+        <label class="range-label">Rotation<input id="rotationRange" type="range" min="0" max="100" value="100"></label>
+        <div class="action-row">
+          <button id="pauseButton" class="secondary-button" type="button">Pause</button>
+          <button id="dayNightButton" class="secondary-button" type="button">Night</button>
+          <button id="motionButton" class="secondary-button" type="button">Reduce motion</button>
+        </div>
+      </section>
+      <section>
+        <h3>Save</h3>
+        <div class="export-grid">
+          <button id="pngButton" type="button">PNG</button>
+          <button id="gifButton" type="button">GIF</button>
+        </div>
+      </section>
+    </div>
+  </aside>
+  <div id="toast" class="toast" role="status"></div>
+  <script src="vendor/gif.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
