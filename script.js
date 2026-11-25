@@ -50,6 +50,8 @@
     night: true,
     fireflies: true,
     enabledKinds: { rose: true, lav: true, sun: true, tulip: true, daisy: true },
+    flowerCounts: { rose: 16, lav: 10, sun: 4, tulip: 6, daisy: 6 },
+    customColors: {},
     theme: 'valentine'
   };
   var themes = {
@@ -79,20 +81,41 @@
     var theme = themes[name] || themes.valentine;
     state.theme = name;
     STEM = theme.stem;
-    KINDS.rose.hues = theme.rose;
-    KINDS.lav.hues = theme.lav;
-    KINDS.sun.hues = theme.sun;
-    KINDS.tulip.hues = theme.tulip;
-    KINDS.daisy.hues = theme.daisy;
+    KINDS.rose.hues = state.customColors.rose || theme.rose;
+    KINDS.lav.hues = state.customColors.lav || theme.lav;
+    KINDS.sun.hues = state.customColors.sun || theme.sun;
+    KINDS.tulip.hues = state.customColors.tulip || theme.tulip;
+    KINDS.daisy.hues = state.customColors.daisy || theme.daisy;
     document.documentElement.style.setProperty('--bg', state.night ? theme.bg : '#d9edf2');
     document.documentElement.style.setProperty('--fg', state.night ? '#f1e9ff' : '#17202a');
+  }
+
+  function colorHues(hex) {
+    var match = /^#([0-9a-f]{6})$/i.exec(hex);
+    if (!match) return [];
+    var value = match[1];
+    var r = parseInt(value.slice(0, 2), 16) / 255;
+    var g = parseInt(value.slice(2, 4), 16) / 255;
+    var b = parseInt(value.slice(4, 6), 16) / 255;
+    var max = Math.max(r, g, b), min = Math.min(r, g, b);
+    var h = 0, s = 0, l = (max + min) / 2;
+    if (max !== min) {
+      var d = max - min;
+      s = d / (1 - Math.abs(2 * l - 1));
+      if (max === r) h = ((g - b) / d) % 6;
+      else if (max === g) h = (b - r) / d + 2;
+      else h = (r - g) / d + 4;
+      h *= 60;
+      if (h < 0) h += 360;
+    }
+    return [[h, s * 100, l * 100], [h, s * 100, clamp(l * 100 + 10, 10, 90)]];
   }
 
   function gen() {
     var r = rng(seed), kinds = [], k;
     Object.keys(KINDS).forEach(function (key) {
       if (!state.enabledKinds[key]) return;
-      var count = Math.round(KINDS[key].count * state.density);
+      var count = Math.round(state.flowerCounts[key] * state.density);
       for (var q = 0; q < count; q++) kinds.push(key);
     });
     for (k = kinds.length - 1; k > 0; k--) { var m = Math.floor(r() * (k + 1)), tmp = kinds[k]; kinds[k] = kinds[m]; kinds[m] = tmp; }
@@ -353,7 +376,31 @@
   });
   document.querySelectorAll('[data-kind]').forEach(function (input) {
     input.addEventListener('change', function () {
+      if (input.checked && state.flowerCounts[input.dataset.kind] === 0) {
+        state.flowerCounts[input.dataset.kind] = 1;
+        $('[data-flower-count="' + input.dataset.kind + '"]').value = '1';
+      }
       state.enabledKinds[input.dataset.kind] = input.checked;
+      gen();
+    });
+  });
+  document.querySelectorAll('[data-flower-count]').forEach(function (input) {
+    input.addEventListener('change', function () {
+      var kind = input.dataset.flowerCount;
+      var count = clamp(Math.round(Number(input.value) || 0), 0, 40);
+      input.value = String(count);
+      state.flowerCounts[kind] = count;
+      var checkbox = $('[data-kind="' + kind + '"]');
+      checkbox.checked = count > 0;
+      state.enabledKinds[kind] = count > 0;
+      gen();
+    });
+  });
+  document.querySelectorAll('[data-flower-color]').forEach(function (input) {
+    input.addEventListener('input', function () {
+      var kind = input.dataset.flowerColor;
+      state.customColors[kind] = colorHues(input.value);
+      applyTheme(state.theme);
       gen();
     });
   });

@@ -1,6 +1,6 @@
 :root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}
 
-/* Layout: one full-screen night stage. A sharp character canvas sits on two blurred copies of itself that make the glow. */
+
 :root {
   --bg: #000;
   --fg: #f1e9ff;
@@ -103,9 +103,41 @@ canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block
   font: 600 12px Georgia, serif;
 }
 .theme-button.active { background: #e9def8; color: #201629; border-color: #fff; }
-.toggle-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 11px 8px; }
-.toggle-grid label { color: #e5deec; font-size: 12px; }
-.toggle-grid input { accent-color: #bb91dc; margin-right: 7px; }
+.section-hint { float: right; color: #a99bb9; font-size: 9px; font-weight: 400; letter-spacing: 0; text-transform: none; }
+.flower-settings-grid { display: grid; gap: 8px; }
+.flower-setting {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 58px 66px;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 8px;
+  border: 1px solid rgba(255,255,255,.09);
+  border-radius: 12px;
+  background: rgba(255,255,255,.035);
+}
+.flower-choice { display: flex; align-items: center; gap: 7px; color: #e5deec; font-size: 12px; }
+.flower-choice input { accent-color: #bb91dc; }
+.flower-option { display: grid; gap: 4px; color: #a99bb9; font-size: 9px; }
+.flower-option input[type="color"] {
+  width: 100%;
+  height: 27px;
+  padding: 2px;
+  border: 1px solid rgba(255,255,255,.16);
+  border-radius: 7px;
+  background: rgba(255,255,255,.08);
+  cursor: pointer;
+}
+.flower-option input[type="number"] {
+  width: 100%;
+  height: 27px;
+  box-sizing: border-box;
+  padding: 3px 6px;
+  border: 1px solid rgba(255,255,255,.16);
+  border-radius: 7px;
+  background: rgba(255,255,255,.08);
+  color: #eee7f7;
+  font: 12px Georgia, serif;
+}
 .range-label {
   display: grid;
   gap: 7px;

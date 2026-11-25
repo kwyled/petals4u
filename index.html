@@ -37,19 +37,39 @@
         </div>
       </section>
       <section>
-        <h3>Flowers</h3>
-        <div class="toggle-grid">
-          <label><input type="checkbox" data-kind="rose" checked> Roses</label>
-          <label><input type="checkbox" data-kind="lav" checked> Lavender</label>
-          <label><input type="checkbox" data-kind="sun" checked> Sunflowers</label>
-          <label><input type="checkbox" data-kind="tulip" checked> Tulips</label>
-          <label><input type="checkbox" data-kind="daisy" checked> Daisies</label>
+        <h3>Flowers <span class="section-hint">Choose, color &amp; count</span></h3>
+        <div class="flower-settings-grid">
+          <div class="flower-setting">
+            <label class="flower-choice"><input type="checkbox" data-kind="rose" checked> Roses</label>
+            <label class="flower-option">Color<input type="color" data-flower-color="rose" value="#eb426d" aria-label="Roses color"></label>
+            <label class="flower-option">Quantity<input type="number" data-flower-count="rose" min="0" max="40" value="16" inputmode="numeric" aria-label="Number of roses"></label>
+          </div>
+          <div class="flower-setting">
+            <label class="flower-choice"><input type="checkbox" data-kind="lav" checked> Lavender</label>
+            <label class="flower-option">Color<input type="color" data-flower-color="lav" value="#aa83eb" aria-label="Lavender color"></label>
+            <label class="flower-option">Quantity<input type="number" data-flower-count="lav" min="0" max="40" value="10" inputmode="numeric" aria-label="Number of lavender stems"></label>
+          </div>
+          <div class="flower-setting">
+            <label class="flower-choice"><input type="checkbox" data-kind="sun" checked> Sunflowers</label>
+            <label class="flower-option">Color<input type="color" data-flower-color="sun" value="#f0bd30" aria-label="Sunflowers color"></label>
+            <label class="flower-option">Quantity<input type="number" data-flower-count="sun" min="0" max="40" value="4" inputmode="numeric" aria-label="Number of sunflowers"></label>
+          </div>
+          <div class="flower-setting">
+            <label class="flower-choice"><input type="checkbox" data-kind="tulip" checked> Tulips</label>
+            <label class="flower-option">Color<input type="color" data-flower-color="tulip" value="#ed426d" aria-label="Tulips color"></label>
+            <label class="flower-option">Quantity<input type="number" data-flower-count="tulip" min="0" max="40" value="6" inputmode="numeric" aria-label="Number of tulips"></label>
+          </div>
+          <div class="flower-setting">
+            <label class="flower-choice"><input type="checkbox" data-kind="daisy" checked> Daisies</label>
+            <label class="flower-option">Color<input type="color" data-flower-color="daisy" value="#fafafa" aria-label="Daisies color"></label>
+            <label class="flower-option">Quantity<input type="number" data-flower-count="daisy" min="0" max="40" value="6" inputmode="numeric" aria-label="Number of daisies"></label>
+          </div>
         </div>
       </section>
       <section>
         <h3>Atmosphere</h3>
         <label class="range-label">Bouquet size<input id="sizeRange" type="range" min="75" max="125" value="100"></label>
-        <label class="range-label">Flower density<input id="densityRange" type="range" min="50" max="140" value="100"></label>
+        <label class="range-label" title="Scales the selected flower quantities">Overall fullness<input id="densityRange" type="range" min="50" max="140" value="100"></label>
         <label class="range-label">Glow<input id="glowRange" type="range" min="20" max="140" value="100"></label>
         <label class="range-label">Rotation<input id="rotationRange" type="range" min="0" max="100" value="100"></label>
         <div class="action-row">
