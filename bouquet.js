@@ -19,6 +19,7 @@ import {
     paused: false,
     reducedMotion: false,
     rotation: 100,
+    rotationOffset: 0,
     size: 130,
     density: 100,
     glow: 1
@@ -210,7 +211,8 @@ import {
       const motionDelta = state.paused || state.reducedMotion ? 0 : frameDelta;
       updateHearts(hearts, motionDelta);
       const time = state.reducedMotion ? 0 : elapsed;
-      const ansi = render(scene, time, dimensions.cols, dimensions.rows, hearts, state.rotation / 100, state.size);
+      const ansi = render(scene, time, dimensions.cols, dimensions.rows, hearts,
+        state.rotation / 100, state.size, state.rotationOffset);
       drawAnsi(ansi, dimensions.cols, dimensions.rows);
     }
     requestAnimationFrame(animate);
@@ -219,6 +221,24 @@ import {
     setPanel(!panel.classList.contains("open"));
   });
   document.getElementById("closePanel").addEventListener("click", () => setPanel(false));
+
+  let drag = null;
+  canvas.addEventListener("pointerdown", (event) => {
+    drag = { x: event.clientX };
+    canvas.setPointerCapture(event.pointerId);
+    canvas.classList.add("drag");
+  });
+  canvas.addEventListener("pointermove", (event) => {
+    if (!drag) return;
+    state.rotationOffset += (event.clientX - drag.x) * 0.01;
+    drag.x = event.clientX;
+  });
+  function endDrag() {
+    drag = null;
+    canvas.classList.remove("drag");
+  }
+  canvas.addEventListener("pointerup", endDrag);
+  canvas.addEventListener("pointercancel", endDrag);
 
   document.querySelectorAll(".theme-button").forEach((button) => {
     button.addEventListener("click", () => applyTheme(button.dataset.theme));

@@ -320,7 +320,7 @@ function updateHearts(hearts, dt) {
   }
 }
 
-function render(scene, t, cols, rows, hearts, rotation = 1, size = 100) {
+function render(scene, t, cols, rows, hearts, rotation = 1, size = 100, rotationOffset = 0) {
   const { pts, flowers, babies, sparkles } = scene;
   const chars = Array.from({ length: rows }, () => new Array(cols).fill(" "));
   const colors = Array.from({ length: rows }, () => new Array(cols).fill(0));
@@ -335,7 +335,7 @@ function render(scene, t, cols, rows, hearts, rotation = 1, size = 100) {
   const cx = cols / 2;
   const cy = 1 + 0.78 * scale;
 
-  const ang = t * SPIN_SPEED * rotation;
+  const ang = t * SPIN_SPEED * rotation + rotationOffset;
   const ca = Math.cos(ang), sa = Math.sin(ang);
   const ct = Math.cos(TILT), st = Math.sin(TILT);
 
