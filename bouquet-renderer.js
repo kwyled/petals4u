@@ -327,13 +327,14 @@ function render(scene, t, cols, rows, hearts, rotation = 1, size = 100, rotation
   const zbuf = Array.from({ length: rows }, () => new Array(cols).fill(-1e9));
 
   const viewRows = rows - 2;
+  const heightFitScale = (viewRows - 2) / 1.45;
   const widthFitScale = (cols - 2) / 2.7;
-  const scale = Math.max(1.0, Math.min((viewRows - 2) / 1.45, widthFitScale));
+  const scale = Math.max(1.0, Math.min(heightFitScale, widthFitScale));
   const sizeFactor = Math.min(size / 100, widthFitScale / scale);
   const flowerScale = Math.min(1 + Math.max(0, sizeFactor - 1) * 0.5, 1.15);
   const sxScale = scale * 2.0 * sizeFactor;
   const cx = cols / 2;
-  const cy = 1 + 0.78 * scale;
+  const cy = 1 + 0.78 * scale + Math.max(0, (rows - cols * 0.6) * 0.5);
 
   const ang = t * SPIN_SPEED * rotation + rotationOffset;
   const ca = Math.cos(ang), sa = Math.sin(ang);
